@@ -16,18 +16,6 @@
     <inertia ixx="${2*m*r*r/5}" ixy = "0" ixz = "0" iyy="${2*m*r*r/5}" iyz = "0" izz="${2*m*r*r/5}" />
   </xacro:macro>
 
-  <xacro:property name="wheel_mass" value="0.5" />
-  <xacro:property name="wheel_radius" value="0.12" />
-  <xacro:property name="wheel_length" value="0.05" />
-
-  <xacro:property name="caster_radius" value="0.03" />
-
-  <xacro:property name="base_x_len" value="0.2" />
-  <xacro:property name="base_y_len" value="0.3" />
-  <xacro:property name="base_z_len" value="0.14" />
-  <xacro:property name="base_chassis_mass" value="10" />
-
-
   <link name="robot_footprint"></link>
 
   <xacro:include filename="$(find my_robot)/urdf/my_robot.gazebo" />
@@ -42,22 +30,23 @@
     <pose>0 0 0.12 0 0 0</pose>
 
     <inertial>
-      <mass value="${base_chassis_mass}"/>
+      <mass value="10"/>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
-      <cuboid_inertia m="${base_chassis_mass}" x= "${base_x_len}" y= "${base_y_len}" z="${base_z_len}"/>
+      <cuboid_inertia m="10" x= "0.2" y= "0.3" z="0.14"/>
+      <inertia ixx="0.09133" ixy = "0" ixz = "0" iyy="0.04967" iyz = "0" izz="0.0685" />
     </inertial>
 
     <collision name='collision'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
-        <box size="${base_x_len} ${base_y_len} ${base_z_len}"/>
+        <box size="0.2 0.3 0.14"/>
       </geometry>
     </collision>
 
     <visual name='chassis_visual'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
-        <box size="${base_x_len} ${base_y_len} ${base_z_len}"/>
+        <box size="0.2 0.3 0.14"/>
       </geometry>
     </visual>
 
@@ -68,20 +57,20 @@
     <inertial>
       <mass value="0.01"/>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
-      <cuboid_inertia m="0.01" x= "${base_x_len}" y= "0.1" z="0.1"/>
+      <inertia ixx="0.000016667" ixy = "0" ixz = "0" iyy="0.00004167" iyz = "0" izz="0.00004167" />
     </inertial>
 
     <collision name='collision'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
-        <box size="${base_x_len} 0.1 0.1"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </collision>
 
     <visual name='sup_visual'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
-        <box size="${base_x_len} 0.1 0.1"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </visual>
   </link>
@@ -96,43 +85,44 @@
 <link name='sup_chassis'>
 
   <inertial>
-    <mass value="${base_chassis_mass/3}"/>
+    <mass value="3"/>
     <origin xyz="0 0 0" rpy=" 0 0 0"/>
-    <cuboid_inertia m="${base_chassis_mass/3}" x= "${base_x_len*1.5}" y= "${base_y_len}" z="0.05"/>
+    <cuboid_inertia m="3" x= "0.3" y= "0.3" z="0.05"/>
+    <inertia ixx="0.023125" ixy = "0" ixz = "0" iyy="0.023125" iyz = "0" izz="0.045" />
   </inertial>
 
   <collision name='collision'>
     <origin xyz="0 0 0" rpy=" 0 0 0"/>
     <geometry>
-      <box size="${base_x_len*1.5} ${base_y_len} 0.05"/>
+      <box size="0.3 0.3 0.05"/>
     </geometry>
   </collision>
 
   <visual name='chassis_visual'>
     <origin xyz="0 0 0" rpy=" 0 0 0"/>
     <geometry>
-      <box size="${base_x_len*1.5} ${base_y_len} 0.05"/>
+      <box size="0.3 0.3 0.05"/>
     </geometry>
   </visual>
 
   <collision name='caster_collision'>
-    <origin xyz="${-base_x_len*3/4 + caster_radius} 0 -0.025" rpy=" 0 0 0"/>
+    <origin xyz="-0.12 0 -0.025" rpy=" 0 0 0"/>
     <geometry>
-      <sphere radius="${caster_radius-0.001}"/>
+      <sphere radius="0.029"/>
     </geometry>
   </collision>
 
   <visual name='caster_visual'>
-    <origin xyz="${-base_x_len*3/4 + caster_radius} 0 -0.025" rpy=" 0 0 0"/>
+    <origin xyz="-0.12 0 -0.025" rpy=" 0 0 0"/>
     <geometry>
-      <sphere radius="${caster_radius}"/>
+      <sphere radius="0.03"/>
     </geometry>
   </visual>
 
 </link>
 
 <joint type="fixed" name="sup_chassis_joint">
-  <origin xyz="${-base_x_len*5/4} 0 -0.045" rpy="0 0 0"/>
+  <origin xyz="-0.25 0 -0.045" rpy="0 0 0"/>
   <child link="sup_chassis"/>
   <parent link="base_chassis"/>
 </joint>
@@ -143,27 +133,27 @@
   <inertial>
     <mass value="0.1"/>
     <origin xyz="0 0 0" rpy=" 0 0 0"/>
-    <cuboid_inertia m="0.1" x= "0.01" y= "${base_y_len}" z="0.05"/>
+    <inertia ixx="0.0007708" ixy = "0" ixz = "0" iyy="0.000021667" iyz = "0" izz="0.0007508" />
   </inertial>
 
   <collision name='collision'>
     <origin xyz="0 0 0" rpy=" 0 0 0"/>
     <geometry>
-      <box size="0.01 ${base_y_len} 0.05"/>
+      <box size="0.01 0.3 0.05"/>
     </geometry>
   </collision>
 
   <visual name='back_sup_chassis_visual'>
     <origin xyz="0 0 0" rpy=" 0 0 0"/>
     <geometry>
-      <box size="0.01 ${base_y_len} 0.05"/>
+      <box size="0.01 0.3 0.05"/>
     </geometry>
   </visual>
 
 </link>
 
 <joint type="fixed" name="back_sup_chassis_joint">
-  <origin xyz="${-base_x_len*3/4 - 0.005} 0 0" rpy="0 0 0"/>
+  <origin xyz="-0.155 0 0" rpy="0 0 0"/>
   <child link="back_sup_chassis"/>
   <parent link="sup_chassis"/>
 </joint>
@@ -173,22 +163,22 @@
 <link name='left_wheel'>
 
   <inertial>
-    <mass value="${wheel_mass}"/>
+    <mass value="0.5"/>
     <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707"/>
-    <cylinder_inertia m="${wheel_mass}" r= "${wheel_radius}" l= "${wheel_length}"/>
+    <inertia ixx="0.001904" ixy = "0" ixz = "0" iyy="0.001904" iyz = "0" izz="0.0036" />
   </inertial>
 
   <collision name='collision'>
     <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707"/>
     <geometry>
-      <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+      <cylinder radius="0.12" length="0.05" />
     </geometry>
   </collision>
 
   <visual name='left_wheel_visual'>
     <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707"/>
     <geometry>
-      <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+      <cylinder radius="0.12" length="0.05" />
     </geometry>
   </visual>
 </link>
@@ -196,28 +186,28 @@
 <link name='right_wheel'>
 
   <inertial>
-    <mass value="${wheel_mass}"/>
+    <mass value="0.5"/>
     <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707"/>
-    <cylinder_inertia m="${wheel_mass}" r= "${wheel_radius}" l= "${wheel_length}"/>
+    <inertia ixx="0.001904" ixy = "0" ixz = "0" iyy="0.001904" iyz = "0" izz="0.0036" />
   </inertial>
 
   <collision name='collision'>
     <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707"/>
     <geometry>
-      <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+      <cylinder radius="0.12" length="0.05" />
     </geometry>
   </collision>
 
   <visual name='right_wheel_visual'>
     <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707"/>
     <geometry>
-      <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+      <cylinder radius="0.12" length="0.05" />
     </geometry>
   </visual>
 </link>
 
 <joint type="continuous" name="left_wheel_hinge">
-  <origin xyz="0 ${(base_y_len + wheel_length)/2 +0.01} 0.02" rpy="0 0 0"/>
+  <origin xyz="0 0.185 0.02" rpy="0 0 0"/>
   <child link="left_wheel"/>
   <parent link="base_chassis"/>
   <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -226,7 +216,7 @@
 </joint>
 
 <joint type="continuous" name="right_wheel_hinge">
-  <origin xyz="0 ${-1*(base_y_len + wheel_length)/2 -0.01} 0.02" rpy="0 0 0"/>
+  <origin xyz="0 -0.185 0.02" rpy="0 0 0"/>
   <child link="right_wheel"/>
   <parent link="base_chassis"/>
   <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -258,7 +248,7 @@
 </link>
 
 <joint type="fixed" name="camera_joint">
-  <origin xyz="${base_x_len/2 +0.025} 0 0" rpy="0 0 0"/>
+  <origin xyz="0.125 0 0" rpy="0 0 0"/>
   <child link="camera"/>
   <parent link="base_chassis"/>
   <axis xyz="0 1 0" rpy="0 0 0.02"/>
