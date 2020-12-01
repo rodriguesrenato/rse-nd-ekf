@@ -1,4 +1,4 @@
-# rse-nd
+# rse-nd-ekf
 Course projects repository for the Udacity Robotics Software Engineer Nanodegree program.
 
 This project contains the following Catkin packages :
