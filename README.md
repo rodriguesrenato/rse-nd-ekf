@@ -11,7 +11,16 @@ This project contains the following Catkin packages :
 Clone this repository in **src** folder in your catkin workspace
 ```
 cd ~/catkin_ws/src
-git clone https://github.com/rodriguesrenato/rse-nd.git
+git clone https://github.com/rodriguesrenato/rse-nd-ekf.git
+cd rse-nd-ekf
+git clone https://github.com/udacity/robot_pose_ekf 
+git clone https://github.com/udacity/odom_to_trajectory
+git clone https://github.com/turtlebot/turtlebot
+cd ~/catkin_ws
+source devel/setup.bash
+rosdep -i install turtlebot_teleop
+catkin_make
+source devel/setup.bash
 ```
 ## Usage
 Supposing your catkin workspace is located in ~/
@@ -20,6 +29,9 @@ cd ~/catkin_ws
 catkin_make
 source devel/setup.bash
 ```
-Use the .launch files to launch packages.
+Use the `main.launch` file to launch all packages together.
+```
+roslaunch main main.launch
+```
 ## License
 The contents of this repository are covered under the MIT License.
